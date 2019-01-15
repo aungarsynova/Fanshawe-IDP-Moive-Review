@@ -1,4 +1,17 @@
-<?php require_once('admin/scripts/read.php');?>
+<?php require_once('admin/scripts/read.php'); 
+if(isset($_GET['filter'])){
+    $tbl = 'tbl_movies';
+    $tbl_2 = 'tbl_genre';
+    $tbl_3 = 'tbl_mov_genre';
+    $col = 'movies_id';
+    $col_2 = 'genre_id';
+    $col_3 = 'genre_name';
+    $filter = $_GET['filter'];
+    $results = filterResults($tbl, $tbl_2, $tbl_3, $col, $col_2, $col_3, $filter);
+}else{
+    $results = getAll('tbl_movies');
+}
+?>
 <!DOCTYPE html>
 
 <html>
@@ -11,30 +24,24 @@
     <script src="main.js"></script>
 </head>
 <body>
-    <header>
-    <h1>Header</h1>
-    <nav>
-        <ul>
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Comedy</a></li>
-        </ul>
-    </nav>
-    </header>
+<?php include('templates/header.html'); ?>
+	<h1>This is the movie site</h1>
 
 <?php
-$results = getAll('tbl_movies');
+
 while($row = $results->fetch(PDO::FETCH_ASSOC)):?>
     <div>
         <h2><?php echo $row['movies_title'];?></h2>
         <h2><?php echo $row['movies_year'];?></h2>
-        <img src="images/<?php echo $row['movies_cover'];?>">
+        <h2><?php echo $row['movies_runtime'];?></h2>
+        <img src="images/<?php echo $row['movies_cover'];?>"> 
+        <a href ="details.php?id=<?php echo $row['movies_id'];?>">Read me</a>
+        <?php endwhile;?>
     </div>
    
-<?php endwhile;?>
 
-<footer>
-<p>Fuck this program I should hve dropped out during the strike</p>
-</footer>
+
+<?php include('templates/footer.html');?>
 
 </body>
 </html>

@@ -18,3 +18,35 @@ function getAll($tbl){
     }
 };
 
+function getSingle($tbl, $col, $value) {
+    include('connect.php');
+    //TODO: Fill the following line with the SQL query where pull everything from $tbl when $col=$id
+    $querySingle = 'SELECT * FROM '.$tbl.' WHERE '.$col.' = '.$value;
+
+    $runSingle = $pdo->query($querySingle);
+    if($runSingle){
+        return $runSingle;
+    }else{
+        $error = 'There was a problem';
+        return $error;
+    }
+}
+
+function filterResults($tbl, $tbl_2, $tbl_3, $col, $col_2, $col_3, $filter){
+    include('connect.php');
+
+    $filterQuery = 'SELECT * FROM '.$tbl.' as a, ';
+    $filterQuery.= $tbl_2.' as b, ';
+    $filterQuery.= $tbl_3.' as c ';
+    $filterQuery.= 'WHERE a.'.$col.' = c.'.$col;
+    $filterQuery.= ' AND b.'.$col_2.' = c.'.$col_2;
+    $filterQuery.= ' AND b.'.$col_3.'= "'. $filter.'"';
+    $runQuery = $pdo->query($filterQuery);
+    if($runQuery){
+        return $runQuery;
+    }else{
+        $error = 'There was a problem';
+        return $error;
+    }
+}
+
