@@ -1,52 +1,50 @@
-<?php
-
+<?php 
 
 function getAll($tbl){
-    include('connect.php');
-    //TO DO: Fill the folloeing variable with SQL query
-    //so that it can fetch all columns
-    //from the given table $tbl
-    $queryAll = 'SELECT * FROM ' .$tbl;
+	include('connect.php');
+	$queryAll = 'SELECT * FROM '.$tbl;
 
-    $runAll = $pdo->query($queryAll);
+	$runAll = $pdo->query($queryAll);
 
-    if($runAll){
-        return $runAll;
-    }else{
-        $error = 'There was a problem accessing this information';
-        return $error;
-    }
-};
-
-function getSingle($tbl, $col, $value) {
-    include('connect.php');
-    //TODO: Fill the following line with the SQL query where pull everything from $tbl when $col=$id
-    $querySingle = 'SELECT * FROM '.$tbl.' WHERE '.$col.' = '.$value;
-
-    $runSingle = $pdo->query($querySingle);
-    if($runSingle){
-        return $runSingle;
-    }else{
-        $error = 'There was a problem';
-        return $error;
-    }
+	if($runAll){
+		return $runAll;
+	}else{
+		$error = 'There was a problem';
+		return $error;
+	}
 }
 
-function filterResults($tbl, $tbl_2, $tbl_3, $col, $col_2, $col_3, $filter){
-    include('connect.php');
+function filterResults($tbl,$tbl_2,$tbl_3,$col,$col_2,$col_3,$filter){
+	include('connect.php');
+	$queryAll = 'SELECT * FROM '.$tbl.' a,';
+	$queryAll .= ' '.$tbl_2.' b,';
+	$queryAll .= ' '.$tbl_3.' c';
+	$queryAll .= ' WHERE a.'.$col.' = c.'.$col;
+	$queryAll .= ' AND b.'.$col_2.' = c.'.$col_2;
+	$queryAll .= ' AND b.'.$col_3.' = "'.$filter.'"';
 
-    $filterQuery = 'SELECT * FROM '.$tbl.' as a, ';
-    $filterQuery.= $tbl_2.' as b, ';
-    $filterQuery.= $tbl_3.' as c ';
-    $filterQuery.= 'WHERE a.'.$col.' = c.'.$col;
-    $filterQuery.= ' AND b.'.$col_2.' = c.'.$col_2;
-    $filterQuery.= ' AND b.'.$col_3.'= "'. $filter.'"';
-    $runQuery = $pdo->query($filterQuery);
-    if($runQuery){
-        return $runQuery;
-    }else{
-        $error = 'There was a problem';
-        return $error;
-    }
+	// echo $queryAll;exit;
+
+	$runAll = $pdo->query($queryAll);
+
+	if($runAll){
+		return $runAll;
+	}else{
+		$error = 'There was a problem';
+		return $error;
+	}
 }
 
+function getSingle($tbl,$col,$value){
+	include ('connect.php');
+
+	$query = 'SELECT * FROM '.$tbl.' WHERE '.$col.'='.$value;
+
+	$runQuery = $pdo->query($query);
+	if($runQuery){
+		return $runQuery;
+	}else{
+		$error = 'There was a problem';
+		return $error;
+	}
+}
