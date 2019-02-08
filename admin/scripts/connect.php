@@ -1,16 +1,16 @@
 <?php 
-
+//Database info for a successfull connection
 $db_dsn = array(
-    'host'=>'localhost',
-    'dbname'=>'db_movies3',
-    'charset'=>'utf8'
+    'host'=>'localhost', //server name
+    'dbname'=>'db_movies3', //database name
+    'charset'=>'utf8'   //conection
 );
 
 $dsn ='mysql:'.http_build_query($db_dsn,'',';');
 
 //Set up connectio credetials
-$db_user= 'root';
-$db_pass= '';
+$db_user= 'root';   //server username
+$db_pass= ''; //server password is blank for windows
 
 //Check connection
 try{
