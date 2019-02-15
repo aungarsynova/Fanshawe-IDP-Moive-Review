@@ -5,4 +5,7 @@
     require_once('functions.php');
     require_once('sessions.php');
     require_once('caller.php');
+    require_once('user.php');
+    require_once('create_pw.php');
+    require_once('send_email.php');
 ?>
